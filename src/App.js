@@ -1,26 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import firebase from 'firebase'
+import {firebaseConfig} from './firebaseConfig'
 
 function App() {
+
+  useEffect(()=>{
+    getProjects()
+  }, [])
+
+  const getProjects=()=>{
+   const app= firebase.initializeApp(firebaseConfig);
+   firebase.analytics();
+   const database=app.database().ref()
+   database.on('value', snap=>{
+    console.log('data: ', snap.val)
+   })
+   
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>
+      hi!
+    </div>)
 }
 
 export default App;
